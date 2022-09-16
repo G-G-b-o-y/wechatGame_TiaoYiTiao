@@ -2,7 +2,7 @@ from pynput.mouse import Button, Controller
 import cv2
 import time
 import random
-from modules.grabscreen import grab_screen
+from grabscreen import grab_screen
 
 class screen_process:
     def __init__(self):
