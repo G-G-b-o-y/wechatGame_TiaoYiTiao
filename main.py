@@ -13,21 +13,17 @@ class screen_process:
         self.gameWindowHeight = 800
         self.diffvar = 305
 
-        # 加载图片
+        # 樣本圖片
         tpl = cv2.imread("window.png")
         # target = cv2.imread("1.png")
         target = screenShoted
-        th,tw = tpl.shape[:2]    #获取模板图像的高宽
-        method = cv2.TM_CCOEFF_NORMED # 标准相关匹配算法
-        # 开始匹配
+        th,tw = tpl.shape[:2]    #cv2 模板匹配
+        method = cv2.TM_CCOEFF_NORMED # 匹配算法
         result = cv2.matchTemplate(target, tpl, method)
-        # 在给定的矩阵中寻找最大和最小值
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-        # 如果最大值超过0.7(自己定义的),表示匹配，完全一样基本上就接近1了
         if max_val > 0.7:
-            self.tl = max_loc #tl是左上角点
-            self.br = (self.tl[0]+tw,self.tl[1]+th+self.gameWindowHeight)    #br右下点
-            # cv2.rectangle(target,tl,br,(0,0,255),5)#画矩形
+            self.tl = max_loc                                                   # tl是左上角
+            self.br = (self.tl[0]+tw,self.tl[1]+th+self.gameWindowHeight)       # br是右下角
             img = self.cropped = target[self.tl[1]:self.br[1], self.tl[0]:self.br[0]]
 
 
@@ -79,4 +75,4 @@ class screen_process:
 while 1:
     screen_process().start()
     print('---END---')
-    time.sleep(0.8)
+    time.sleep(1)
